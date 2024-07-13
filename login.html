@@ -73,44 +73,43 @@
         <div class="input-group">
             <input type="text" id="login-username" required placeholder="ユーザーネームを入力してください">
         </div>
-        <div class="input-group">
-            <input type="password" id="login-password" required placeholder="パスワードを入力してください">
-        </div>
         <button onclick="login()" id="loginButton">FastPassを取得する</button>
         <div id="result"></div>
     </div>
 
     <script>
         function login() {
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            const loginButton = document.getElementById('loginButton');
-            loginButton.textContent = '送信中...';
-            loginButton.disabled = true;
-            
-            fetch(`https://script.google.com/macros/s/AKfycbxVfMPsYcOWqdaHeIhwWxFpWaKH4zeww4zk5bcM4h7xrLYc0GlJ2YtHILgaGaKGdQPF/exec?username=${username}&password=${password}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        displayError(`エラー: ${data.error}`);
-                        loginButton.textContent = 'FastPassを取得する';
-                        loginButton.disabled = false;
-                    } else {
-                        window.location.href = `show.html?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
-                    }
-                })
-                .catch(error => {
-                    console.error('エラー:', error);
-                    displayError('データの取得に失敗しました。');
-                    loginButton.textContent = 'FastPassを取得する';
-                    loginButton.disabled = false;
-                });
-        }
+        const username = document.getElementById('login-username').value;
+        const loginButton = document.getElementById('loginButton');
+        const resultDiv = document.getElementById('result');
 
-        function displayError(message) {
-            const resultDiv = document.getElementById('result');
-            resultDiv.textContent = message;
-        }
+        loginButton.textContent = '送信中...';
+        loginButton.disabled = true;
+
+        fetch(`https://script.google.com/macros/s/AKfycbxBhSae4wW4E9KZJJpEdip7iydW_uzJEFALF62M-fF6ff8f2H0R_UjkfxcW6s25lVOg/exec?username=${username}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    resultDiv.textContent = `エラー: ${data.error}`;
+                    loginButton.textContent = 'ファストパスを取得する';
+                    loginButton.disabled = false;
+                } else {
+                    if (data.check === "") { 
+                        window.location.href = `show.html?username=${encodeURIComponent(username)}`;
+                    } else {
+                        alert("入場済みです。もう一度お試しください。");
+                        loginButton.textContent = 'ファストパスを取得する';
+                        loginButton.disabled = false;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('エラー:', error);
+                resultDiv.textContent = 'データの取得に失敗しました。';
+                loginButton.textContent = 'ファストパスを取得する';
+                loginButton.disabled = false;
+            });
+    }
     </script>
 </body>
 </html>

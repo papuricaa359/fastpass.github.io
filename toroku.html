@@ -1,60 +1,101 @@
+
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登録画面</title>
+    <title>焼きそば</title>
     <style>
         body {
+            margin: 0;
             font-family: 'Arial', sans-serif;
             background-color: #f8d568;
-            margin: 0;
-            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
         }
         .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 70px;
+            margin-bottom: 50px;
+        }
+
+        .form-container {
+            width: 85%;
             background-color: #ffffff;
-            border: 2px solid #ffd700;
+            border: 2px solid #ff4500;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px;
         }
-        h2 {
+
+        .form-container h1 {
             text-align: center;
             color: #3b9ae1;
             margin-bottom: 20px;
-            text-transform: uppercase;
+            font-size: 1.5em;
         }
+
+        .solid {
+            border-bottom: 2px solid #ff4500;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
         .input-group {
             margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
         }
-        .input-group input, .input-group select {
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1em;
+        }
+
+        .input-group input,
+        .input-group select {
             width: 100%;
             padding: 10px;
-            box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 1em;
+            box-sizing: border-box;
         }
+
+        .input-flex {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-flex select {
+            width: calc(50% - 5px);
+        }
+
         button {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             background-color: #3b9ae1;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 1.2em;
             font-weight: bold;
-            text-transform: uppercase;
             transition: background-color 0.3s ease;
+            text-transform: uppercase;
         }
+
         button:hover {
             background-color: #1f5a86;
         }
+
         .overlay {
             position: fixed;
             top: 0;
@@ -67,132 +108,145 @@
             align-items: center;
             z-index: 1000;
         }
+
         .overlay-text {
             color: white;
-            font-size: 24px;
+            font-size: 1.5em;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h2>登録画面</h2>
-        <form id="registrationForm">
-            <div class="input-group">
-                <input type="text" id="username" required placeholder="ユーザーネーム">
-            </div>
-            <div class="input-group">
-                <input type="password" id="password" required placeholder="パスワード">
-            </div>
-            <div class="input-group">
-                <input type="password" id="passwordConfirm" required placeholder="パスワード再確認">
-            </div>
-            <div class="input-group">
-                <select id="hour" required>
-                    <option value="00">00時</option>
-                    <option value="01">01時</option>
-                    <option value="02">02時</option>
-                    <option value="03">03時</option>
-                    <option value="04">04時</option>
-                    <option value="05">05時</option>
-                    <option value="06">06時</option>
-                    <option value="07">07時</option>
-                    <option value="08">08時</option>
-                    <option value="09">09時</option>
-                    <option value="10">10時</option>
-                    <option value="11">11時</option>
-                    <option value="12">12時</option>
-                    <option value="13">13時</option>
-                    <option value="14">14時</option>
-                    <option value="15">15時</option>
-                    <option value="16">16時</option>
-                    <option value="17">17時</option>
-                    <option value="18">18時</option>
-                    <option value="19">19時</option>
-                    <option value="20">20時</option>
-                    <option value="21">21時</option>
-                    <option value="22">22時</option>
-                    <option value="23">23時</option>
-                </select>
-                <select id="minute" required>
-                    <option value="00">00分</option>
-                    <option value="15">15分</option>
-                    <option value="30">30分</option>
-                    <option value="45">45分</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <select id="people" required>
-                    <option value="1">1人</option>
-                    <option value="2">2人</option>
-                    <option value="3">3人</option>
-                    <option value="4">4人</option>
-                    <option value="5">5人</option>
-                    <option value="6">6人</option>
-                    <option value="7">7人</option>
-                    <option value="8">8人</option>
-                    <option value="9">9人</option>
-                    <option value="10">10人</option>
-                </select>
-            </div>
-            <button type="button" onclick="register()">登録</button>
-        </form>
-    </div>
 
+<body>
+
+    <div class="container">
+        <div class="form-container">
+            <form id="registrationForm">
+                <h1>ファストパスを取得する</h1>
+                <div class="solid">
+                    <p>ニックネームを入力してください。</p>
+                    <div class="input-group">
+                        <input type="text" id="username" required placeholder="ニックネーム">
+                    </div>
+                </div>
+                <div class="solid">
+                    <p>受け取りたい時間を選択してください。</p>
+                    <div class="input-group input-flex">
+                        <select id="hour" required>
+                            <option value="00">00時</option>
+                            <option value="01">01時</option>
+                            <option value="02">02時</option>
+                            <option value="03">03時</option>
+                            <option value="04">04時</option>
+                            <option value="05">05時</option>
+                            <option value="06">06時</option>
+                            <option value="07">07時</option>
+                            <option value="08">08時</option>
+                            <option value="09">09時</option>
+                            <option value="10">10時</option>
+                            <option value="11">11時</option>
+                            <option value="12">12時</option>
+                            <option value="13">13時</option>
+                            <option value="14">14時</option>
+                            <option value="15">15時</option>
+                            <option value="16">16時</option>
+                            <option value="17">17時</option>
+                            <option value="18">18時</option>
+                            <option value="19">19時</option>
+                            <option value="20">20時</option>
+                            <option value="21">21時</option>
+                            <option value="22">22時</option>
+                            <option value="23">23時</option>
+                        </select>
+                        <select id="minute" required>
+                            <option value="00">00分</option>
+                            <option value="15">15分</option>
+                            <option value="30">30分</option>
+                            <option value="45">45分</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="solid">
+                    <div class="input-group">
+                        <label for="people">数量</label>
+                        <select id="people" required>
+                            <option value="1">1個</option>
+                            <option value="2">2個</option>
+                            <option value="3">3個</option>
+                            <option value="4">4個</option>
+                            <option value="5">5個</option>
+                            <option value="6">6個</option>
+                            <option value="7">7個</option>
+                            <option value="8">8個</option>
+                            <option value="9">9個</option>
+                            <option value="10">10個</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" onclick="usercheck()">注文確定</button>
+            </form>
+        </div>
+    </div>
     <div class="overlay" id="overlay">
         <div class="overlay-text">送信中...</div>
     </div>
-
     <script>
+
+        function usercheck() {
+            var username = document.getElementById("username").value;
+            if (username === "") {
+                alert("ユーザーネームを入力してください。");
+                return;
+            }
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = "flex";
+            fetch(`https://script.google.com/macros/s/AKfycbwTmOCfOM_i1MMrt2vMjkXwMYG0gqw7zs1o9rbBLnRAbzYwXzgwcS-BrWArHEcBfruaeQ/exec?username=${encodeURIComponent(username)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.flag === "true") {
+                        alert("入力したニックネームは既に登録されています。別のニックネームを入力してください。");
+                        overlay.style.display = "none";
+                    } else {
+                        register();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking username:', error);
+                    alert("エラーが発生しました。もう一度お試しください。");
+                });
+        }
+
         function register() {
             var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-            var passwordConfirm = document.getElementById("passwordConfirm").value;
             var hour = document.getElementById("hour").value;
             var minute = document.getElementById("minute").value;
             var people = document.getElementById("people").value;
             var time = hour + "：" + minute;
-            if (!/\D/.test(password)) {
-                alert("パスワードには数字以外の文字を含めてください。");
-                return;
-            }
-            if (username === "") {
-                alert("ユーザーネームを入力してください。");
-                return;
-            }if (password !== passwordConfirm) {
-                alert("パスワードが一致しません。再度入力してください。");
-                return;
-            }
-
-            // ローディング表示
-            var overlay = document.getElementById("overlay");
-            overlay.style.display = "flex";
-
             var formData = new FormData();
             formData.append("username", username);
-            formData.append("password", password);
             formData.append("time", time);
             formData.append("people", people);
-
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = "flex";
             var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
+                        // 登録成功後の処理
                         document.getElementById("username").value = "";
-                        document.getElementById("password").value = "";
-                        document.getElementById("passwordConfirm").value = "";
                         document.getElementById("hour").value = "";
                         document.getElementById("minute").value = "";
                         document.getElementById("people").value = "";
-                        window.location.href = 'send.html';
+                        window.location.href = 'send.html'; 
                     } else {
                         alert('登録に失敗しました。再度お試しください。');
                     }
                     overlay.style.display = "none";
                 }
             };
-            xhr.open("POST", "https://script.google.com/macros/s/AKfycbwR5oqCbWldKMv2ZGD8IM3eBYlp4DGNID2sJHW-IvUpChgJ2wPxPnU_4-bpCKr92wJkCA/exec");
+            xhr.open("POST", "https://script.google.com/macros/s/AKfycbwTmOCfOM_i1MMrt2vMjkXwMYG0gqw7zs1o9rbBLnRAbzYwXzgwcS-BrWArHEcBfruaeQ/exec");
             xhr.send(formData);
         }
     </script>
 </body>
+
 </html>
